@@ -1,0 +1,27 @@
+---
+abstract: 'Geocode addresses with the GeocodeFarm API'
+author:
+  - 'Piotr Roszatycki <dexter@cpan.org>'
+build_requires:
+  Test::More: 0.88
+dynamic_config: 1
+generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Geo-Coder-GeocodeFarm
+provides:
+  Geo::Coder::GeocodeFarm:
+    file: lib/Geo/Coder/GeocodeFarm.pm
+    version: 0.0100
+requires:
+  Carp: 0
+  LWP::UserAgent: 0
+  XML::Simple: 0
+  perl: 5.006
+resources:
+  bugtracker: http://github.com/dex4er/perl-Geo-Coder-GeocodeFarm/issues
+  license: http://dev.perl.org/licenses/
+  repository: http://github.com/dex4er/perl-Geo-Coder-GeocodeFarm
+version: 0.0100
