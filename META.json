@@ -31,7 +31,7 @@
    "provides" : {
       "Geo::Coder::GeocodeFarm" : {
          "file" : "lib/Geo/Coder/GeocodeFarm.pm",
-         "version" : "0.0100"
+         "version" : "0.0101"
       }
    },
    "release_status" : "stable",
@@ -46,5 +46,5 @@
          "url" : "http://github.com/dex4er/perl-Geo-Coder-GeocodeFarm"
       }
    },
-   "version" : "0.0100"
+   "version" : "0.0101"
 }

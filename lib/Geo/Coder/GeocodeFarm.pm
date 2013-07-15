@@ -29,7 +29,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.0100';
+our $VERSION = '0.0101';
 
 use Carp qw(croak);
 use Encode;
@@ -63,7 +63,7 @@ sub new {
             agent     => __PACKAGE__ . "/$VERSION",
             env_proxy => 1,
         ),
-        url    => 'http://geocodefarm.com/geo.php',
+        url    => 'http://www.geocodefarm.com/geo.php',
         parser => $args{parser} || XML::Simple->new(
             NoAttr    => 1,
         ),

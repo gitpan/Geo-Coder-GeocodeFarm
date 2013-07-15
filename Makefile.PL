@@ -3,16 +3,16 @@ require 5.006;
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-  'NAME' => 'Geo::Coder::GeocodeFarm',
-  'EXE_FILES' => [],
-  'PREREQ_PM' => {
-                   'XML::Simple' => 0,
-                   'LWP::UserAgent' => 0,
-                   'Carp' => 0,
-                   'Test::More' => '0.88'
-                 },
   'VERSION_FROM' => 'lib/Geo/Coder/GeocodeFarm.pm',
+  'EXE_FILES' => [],
   'PL_FILES' => {},
-  'INSTALLDIRS' => 'site'
+  'INSTALLDIRS' => 'site',
+  'NAME' => 'Geo::Coder::GeocodeFarm',
+  'PREREQ_PM' => {
+                   'Carp' => 0,
+                   'XML::Simple' => 0,
+                   'Test::More' => '0.88',
+                   'LWP::UserAgent' => 0
+                 }
 )
 ;
