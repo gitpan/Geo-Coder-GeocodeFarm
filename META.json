@@ -16,14 +16,15 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Test::Deep" : "0",
             "Test::More" : "0.88"
          }
       },
       "runtime" : {
          "requires" : {
             "Carp" : "0",
+            "JSON" : "0",
             "LWP::UserAgent" : "0",
-            "XML::Simple" : "0",
             "perl" : "5.006"
          }
       }
@@ -31,7 +32,7 @@
    "provides" : {
       "Geo::Coder::GeocodeFarm" : {
          "file" : "lib/Geo/Coder/GeocodeFarm.pm",
-         "version" : "0.0101"
+         "version" : "0.0200"
       }
    },
    "release_status" : "stable",
@@ -46,5 +47,5 @@
          "url" : "http://github.com/dex4er/perl-Geo-Coder-GeocodeFarm"
       }
    },
-   "version" : "0.0101"
+   "version" : "0.0200"
 }

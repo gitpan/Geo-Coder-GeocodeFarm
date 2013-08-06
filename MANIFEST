@@ -1,6 +1,7 @@
 Build.PL
 Changes
 examples/geocoder.pl
+examples/reverse_geocode.pl
 lib/Geo/Coder/GeocodeFarm.pm
 MANIFEST			This list of files
 MANIFEST.SKIP
@@ -8,6 +9,7 @@ README
 README.md
 t/010_use.t
 t/050_geocode.t
+t/070_reverse_geocode.t
 xt/check_changes.t
 xt/consistent_version_numbers.t
 xt/copyright.t
