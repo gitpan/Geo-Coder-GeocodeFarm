@@ -16,7 +16,7 @@ my $build = Module::Build->new(
     module_name             => $module,
     license                 => 'perl',
     requires                => {
-        'perl'                  => 5.006,
+        'perl'                  => 5.008,
         'Carp'              => 0,
         'LWP::UserAgent'    => 0,
         'JSON'              => 0,
@@ -24,6 +24,7 @@ my $build = Module::Build->new(
     build_requires          => {
         'Test::More'            => 0.88,
         'Test::Deep'            => 0,
+        'Test::Exception'       => 0,
     },
     auto_configure_requires => 0,
     create_makefile_pl      => 'traditional',

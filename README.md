@@ -14,8 +14,7 @@ use Geo::Coder::GeocodeFarm;
     );
     printf "%f,%f",
         $result->{COORDINATES}{latitude},
-        $result->{COORDINATES}{longitude}
-     if $result->{STATUS}{status} eq 'SUCCESS';
+        $result->{COORDINATES}{longitude};
 
 # DESCRIPTION
 
@@ -31,6 +30,7 @@ functionality of the GeocodeFarm API.
         url    => 'http://www.geocodefarm.com/api/',
         ua     => LWP::UserAgent->new,
         parser => JSON->new->utf8,
+        raise_failure => 1,
     );
 
 Creates a new geocoding object. `key` argument is required.
@@ -49,6 +49,16 @@ Forward geocoding takes a provided address or location and returns the
 coordinate set for the requested location as a nested list:
 
     {
+        ACCOUNT => {
+            api_key => '3d517dd448a5ce1c2874637145fed69903bc252a',
+            email => 'joe.sixpack@example.net',
+            monthly_due => '25.00',
+            name => 'Joe Sixpack',
+            next_due => '20130901',
+            remaining_queries => '24995',
+            usage_limit => '25000',
+            used_today => '5',
+        },
         ADDRESS => {
             accuracy => 'GOOD ACCURACY',
             address_provided => '530 WEST MAIN ST ANOKA MN 55303',
@@ -70,27 +80,11 @@ coordinate set for the requested location as a nested list:
         },
     }
 
-Returns failure if the service failed to find coordinates or wrong key was used:
+Slash `/` is replaced with dash `-` in location string.
 
-    {
-        STATUS => {
-            access => 'KEY_VALID, ACCESS_GRANTED',
-            copyright_logo => 'http://www.geocodefarm.com/assets/img/logo.png',
-            copyright_notice => 'Results Copyright (c) 2013 GeocodeFarm. All Rights Reserved. No unauthorized redistribution without written consent from GeocodeFarm's Owners and Operators.',
-            status => 'FAILED, NO_RESULTS',
-        },
-    }
-
-or:
-
-    {
-        STATUS => {
-            access => 'ACCESS DENIED. CHECK API KEY, USAGE ALLOWANCE, AND BILLING.',
-            copyright_logo => 'http://www.geocodefarm.com/assets/img/logo.png',
-            copyright_notice => 'Results Copyright (c) 2013 GeocodeFarm. All Rights Reserved. No unauthorized redistribution without written consent from GeocodeFarm's Owners and Operators.',
-            status => 'FAILED, ACCESS_DENIED',
-        },
-    }
+Method throws an error (or returns failure as nested list if raise\_failure
+argument is false) if the service failed to find coordinates or wrong key was
+used.
 
 Methods throws an error if there was an other problem.
 
@@ -101,10 +95,26 @@ Methods throws an error if there was an other problem.
         lng => $longtitude,
     )
 
+or
+
+    $result = $geocoder->reverse_geocode(
+        latlng => "$latitude,$longtitude",
+    )
+
 Reverse geocoding takes a provided coordinate set and returns the address for
 the requested coordinates as a nested list:
 
     {
+        ACCOUNT => {
+            api_key => '3d517dd448a5ce1c2874637145fed69903bc252a',
+            email => 'joe.sixpack@example.net',
+            monthly_due => '25.00',
+            name => 'Joe Sixpack',
+            next_due => '20130901',
+            remaining_queries => '24994',
+            usage_limit => '25000',
+            used_today => '6',
+        },
         ADDRESS => {
             address => '500-534 West Main Street, Anoka, MN 55303, USA',
             accuracy => 'GOOD ACCURACY',
@@ -125,9 +135,11 @@ the requested coordinates as a nested list:
         },
     }
 
-Returns failure if the service failed to find coordinates or wrong key was used.
+Method throws an error (or returns failure as nested list if raise\_failure
+argument is false) if the service failed to find coordinates or wrong key was
+used.
 
-Methods throws an error if there was an other problem.
+Method throws an error if there was an other problem.
 
 # SEE ALSO
 

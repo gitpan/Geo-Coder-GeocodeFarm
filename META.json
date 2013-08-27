@@ -4,7 +4,7 @@
       "Piotr Roszatycki <dexter@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -17,6 +17,7 @@
       "build" : {
          "requires" : {
             "Test::Deep" : "0",
+            "Test::Exception" : "0",
             "Test::More" : "0.88"
          }
       },
@@ -25,14 +26,14 @@
             "Carp" : "0",
             "JSON" : "0",
             "LWP::UserAgent" : "0",
-            "perl" : "5.006"
+            "perl" : "5.008"
          }
       }
    },
    "provides" : {
       "Geo::Coder::GeocodeFarm" : {
          "file" : "lib/Geo/Coder/GeocodeFarm.pm",
-         "version" : "0.0200"
+         "version" : "0.0300"
       }
    },
    "release_status" : "stable",
@@ -47,5 +48,5 @@
          "url" : "http://github.com/dex4er/perl-Geo-Coder-GeocodeFarm"
       }
    },
-   "version" : "0.0200"
+   "version" : "0.0300"
 }

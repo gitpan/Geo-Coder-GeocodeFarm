@@ -16,8 +16,7 @@ use Geo::Coder::GeocodeFarm;
   );
   printf "%f,%f",
       $result->{COORDINATES}{latitude},
-      $result->{COORDINATES}{longitude}
-   if $result->{STATUS}{status} eq 'SUCCESS';
+      $result->{COORDINATES}{longitude};
 
 =head1 DESCRIPTION
 
@@ -33,12 +32,13 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.0200';
+our $VERSION = '0.0300';
 
 use Carp qw(croak);
 use Encode;
 use LWP::UserAgent;
 use URI;
+use URI::Escape;
 use JSON;
 
 use constant DEBUG => !! $ENV{PERL_GEO_CODER_GEOCODEFARM_DEBUG};
@@ -53,6 +53,7 @@ use constant DEBUG => !! $ENV{PERL_GEO_CODER_GEOCODEFARM_DEBUG};
       url    => 'http://www.geocodefarm.com/api/',
       ua     => LWP::UserAgent->new,
       parser => JSON->new->utf8,
+      raise_failure => 1,
   );
 
 Creates a new geocoding object. C<key> argument is required.
@@ -75,6 +76,7 @@ sub new {
         ),
         url    => 'http://www.geocodefarm.com/api/',
         parser => $args{parser} || JSON->new->utf8,
+        raise_failure => $args{raise_failure} || 1,
         %args,
     } => $class;
 
@@ -92,6 +94,16 @@ Forward geocoding takes a provided address or location and returns the
 coordinate set for the requested location as a nested list:
 
   {
+      ACCOUNT => {
+          api_key => '3d517dd448a5ce1c2874637145fed69903bc252a',
+          email => 'joe.sixpack@example.net',
+          monthly_due => '25.00',
+          name => 'Joe Sixpack',
+          next_due => '20130901',
+          remaining_queries => '24995',
+          usage_limit => '25000',
+          used_today => '5',
+      },
       ADDRESS => {
           accuracy => 'GOOD ACCURACY',
           address_provided => '530 WEST MAIN ST ANOKA MN 55303',
@@ -113,27 +125,11 @@ coordinate set for the requested location as a nested list:
       },
   }
 
-Returns failure if the service failed to find coordinates or wrong key was used:
+Slash C</> is replaced with dash C<-> in location string.
 
-  {
-      STATUS => {
-          access => 'KEY_VALID, ACCESS_GRANTED',
-          copyright_logo => 'http://www.geocodefarm.com/assets/img/logo.png',
-          copyright_notice => 'Results Copyright (c) 2013 GeocodeFarm. All Rights Reserved. No unauthorized redistribution without written consent from GeocodeFarm's Owners and Operators.',
-          status => 'FAILED, NO_RESULTS',
-      },
-  }
-
-or:
-
-  {
-      STATUS => {
-          access => 'ACCESS DENIED. CHECK API KEY, USAGE ALLOWANCE, AND BILLING.',
-          copyright_logo => 'http://www.geocodefarm.com/assets/img/logo.png',
-          copyright_notice => 'Results Copyright (c) 2013 GeocodeFarm. All Rights Reserved. No unauthorized redistribution without written consent from GeocodeFarm's Owners and Operators.',
-          status => 'FAILED, ACCESS_DENIED',
-      },
-  }
+Method throws an error (or returns failure as nested list if raise_failure
+argument is false) if the service failed to find coordinates or wrong key was
+used.
 
 Methods throws an error if there was an other problem.
 
@@ -143,9 +139,8 @@ sub geocode {
     my ($self, %args) = @_;
 
     my $location = $args{location};
-    if (Encode::is_utf8($location)) {
-        $location = Encode::encode_utf8($location);
-    };
+    $location =~ tr{/}{-};
+    $location = uri_escape_utf8 $location;
 
     my $url = URI->new_abs(sprintf('forward/json/%s/%s', $self->{key}, $location), $self->{url});
     warn $url if DEBUG;
@@ -160,6 +155,9 @@ sub geocode {
     my $data = eval { $self->{parser}->decode($content) };
     croak $content if $@;
 
+    croak "GeocodeFarm API returned status: ", $data->{geocoding_results}{STATUS}{status}
+        if ($self->{raise_failure} and ($data->{geocoding_results}{STATUS}{status}||'') ne 'SUCCESS');
+
     return $data->{geocoding_results};
 };
 
@@ -171,10 +169,26 @@ sub geocode {
       lng => $longtitude,
   )
 
+or
+
+  $result = $geocoder->reverse_geocode(
+      latlng => "$latitude,$longtitude",
+  )
+
 Reverse geocoding takes a provided coordinate set and returns the address for
 the requested coordinates as a nested list:
 
   {
+      ACCOUNT => {
+          api_key => '3d517dd448a5ce1c2874637145fed69903bc252a',
+          email => 'joe.sixpack@example.net',
+          monthly_due => '25.00',
+          name => 'Joe Sixpack',
+          next_due => '20130901',
+          remaining_queries => '24994',
+          usage_limit => '25000',
+          used_today => '6',
+      },
       ADDRESS => {
           address => '500-534 West Main Street, Anoka, MN 55303, USA',
           accuracy => 'GOOD ACCURACY',
@@ -195,9 +209,11 @@ the requested coordinates as a nested list:
       },
   }
 
-Returns failure if the service failed to find coordinates or wrong key was used.
+Method throws an error (or returns failure as nested list if raise_failure
+argument is false) if the service failed to find coordinates or wrong key was
+used.
 
-Methods throws an error if there was an other problem.
+Method throws an error if there was an other problem.
 
 =cut
 
@@ -218,7 +234,7 @@ sub reverse_geocode {
         }
     };
 
-    my $url = URI->new_abs(sprintf('reverse/json/%s/%f/%f', $self->{key}, $lat, $lng), $self->{url});
+    my $url = URI->new_abs(sprintf('reverse/json/%s/%s/%s', $self->{key}, $lat, $lng), $self->{url});
     warn $url if DEBUG;
 
     my $res = $self->{ua}->get($url);
@@ -230,6 +246,9 @@ sub reverse_geocode {
 
     my $data = eval { $self->{parser}->decode($content) };
     croak $content if $@;
+
+    croak "GeocodeFarm API returned status: ", $data->{geocoding_results}{STATUS}{status}
+        if ($self->{raise_failure} and ($data->{geocoding_results}{STATUS}{status}||'') ne 'SUCCESS');
 
     return $data->{geocoding_results};
 };

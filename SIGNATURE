@@ -14,27 +14,30 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 015ba7ccac315610bafe697ce1e1f5d35de4f71e Build.PL
-SHA1 af9cf71120dc764184b3a4df54a04f7778e377c4 Changes
+SHA1 a2cc6cdc0985c714b24636435bb7bd347af2a6a7 Build.PL
+SHA1 d27d77c25065985531657a76a5b633d6bcfe2bdd Changes
 SHA1 a174928e84308ecca1e244fda30c56960b1e31e2 LICENSE
-SHA1 2dcea63ab6d0637025ff6474fef69ca1e5ed0924 MANIFEST
+SHA1 549fa90f3384e9f679e038dae2d39f2be955050b MANIFEST
 SHA1 86fb54c8932787c88ad623cf4792182853eeca85 MANIFEST.SKIP
-SHA1 47aa7d4a723ca6e2ac61b83b0e58369ffeac7f3e META.json
-SHA1 f7a2d557742c9d42f478021e4e738846d9d28cb9 META.yml
-SHA1 bafac6e0e3ae1d21bce95a589625085f86f8e8f9 Makefile.PL
-SHA1 b3f3d616ae6861e1f42ec7653b349fbc6d4c73ce README
-SHA1 eadb23dae4f05fccdab987058d00a783f70c34c3 README.md
-SHA1 6be5d02f6fa1144db0935682c76e7fc54613ba8d examples/geocoder.pl
+SHA1 75a3c80ca92771fea59a1db62bd2f15adab4b4bb META.json
+SHA1 cc72763b9fa7c63e3e26eba63a3be853697f0a06 META.yml
+SHA1 9b0bb7f7c408391eeb29d6f088908bbac18d5600 Makefile.PL
+SHA1 7aba501438b3d1707c42c20f58a14c24d5794cb7 README
+SHA1 f197898106075ea56d2dcbcb3afdf7d3a165c0f3 README.md
+SHA1 752adcade56ff93f05c150931893f884c74ca11c examples/geocode.pl
 SHA1 800acb136ecb7a847c5adef7e02f80ad9abb0f6b examples/reverse_geocode.pl
-SHA1 abcd2ce9ec7059d17abb97f2a3ea492c55fd705f lib/Geo/Coder/GeocodeFarm.pm
+SHA1 ea23c5ab3cbece524a2896357d9253f1adfed9f5 lib/Geo/Coder/GeocodeFarm.pm
 SHA1 a88bfdf850be653e2cddf265f986175af51d0fed t/010_use.t
 SHA1 2757d7f491708e70ea39995f94a7028bcc9dfd85 t/050_geocode.t
-SHA1 2684418ec949b9a0915bc2fd2d3e2e3aba5a08b2 t/070_reverse_geocode.t
+SHA1 ec897f8b05778b34bd5eb603e3f15a4cb01dd400 t/060_geocode_failure.t
+SHA1 fe4cee8ca3a8f8dfaef3b00e6319e08c40bfc37b t/065_geocode_utf8.t
+SHA1 3c18e1ab6583bcf38306eba84dcfbe180372479d t/070_reverse_geocode.t
+SHA1 ea4e941e4039f239eaf2ef25a7cf7d898f984781 t/080_reverse_geocode_failure.t
 SHA1 90353a99ac0f719b6f3e58029804d8556cedc2ab xt/check_changes.t
 SHA1 1c27e5840b0154e44120bc2edc02fbb507c76819 xt/consistent_version_numbers.t
 SHA1 67bb4c141ea95809f3db2d526ce91d9e6d894756 xt/copyright.t
 SHA1 650dccfa9b6f5a98cf731c89041bea8935dbc623 xt/cover.pl
-SHA1 e6cd4b4bbadcfddd26f7f2fa3c6b48339be8343f xt/cpan_changes.t
+SHA1 632cd911581e4f8ccefe863b6846c5b60ddeee27 xt/cpan_changes.t
 SHA1 4f8f90e1c421bfd592e6806ec4d0a75f3d56406a xt/cpan_meta.t
 SHA1 48a67f01c35122165bb633264cba72d984d7a89e xt/dist_manifest.t
 SHA1 f5aac658ae1888964274e68d179413782082b7ad xt/distribution.t
@@ -53,7 +56,7 @@ SHA1 a38994922fda6d64e2ee75198fadc464a221fea9 xt/signature.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iEYEARECAAYFAlIA78gACgkQhMHHe8CxCltVzwCfY3tUjvu0JSnJokl8tv0DO4h9
-RtQAoM6tLMhIiGtdocMQD77SMAFO/FFQ
-=Ssvj
+iEYEARECAAYFAlIcgMoACgkQhMHHe8CxCltYPwCglDtAZ7zlmaoyHG/ixk8N0wiz
+eCIAoM4H21ONp32VblAjOQS1NcFbOKvP
+=qhBQ
 -----END PGP SIGNATURE-----
